@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+          const ap1 = "/getCurrentValues"; //  /{station_name}
+    const ap2 = "/getHourlyAvg" ; // /{station_name}/{dt_from_string}/{dt_to_string}";
+    const ap3 = "/getRange"; // /{station_name}/{dt_from_string}/{dt_to_string}";
+    const ap4 = "/getSessionInfo"; // /{project_name}";
+    const ap5 = "/getSingleDay"; // /{station_name}/{dt_from_string}";
+    const ap6 = "/getStationStatus"; // /{station_id}";
+    const ap7 = "/getStations"; // /{project_name}";
+    const urlBase = "https://airqino-api.magentalab.it";
+
+    function toApi(api,options){
+        let option = "";
+        options.forEach((opt)=>{
+            option+="/"+opt;
+        })
+        return api+option;
+    }
+
+
+    fetch(urlBase+toApi(ap5,["SMART188","2024-01-10"])).then((res)=>{
+        res.json().then((data)=>{
+            console.log(data);
+        })
+    })
+    </script>
+</body>
+</html>

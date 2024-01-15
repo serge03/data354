@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+	#screen {
+		display: flex;
+	}
+	#screen >div{
+		margin: 0 8px;
+	}
+	</style>
+</head>
+
+<body>
+	<nav>
+		<h1>Visualiseur de donné</h1> <a href="index.html" class="active"><span>Live <i></i></span></a> <a href="periode.html"><span>Periode</span></a> </nav>
+	<h3 id="h">Graphe</h3>
+	<div id="screen">
+		<div>
+			<div class="loader" id="loader1"></div>
+			<canvas id="myChart" width="500px" height="200px"></canvas>
+			<div id="infoStation1"></div>
+		</div>
+		<div>
+			
+			<div class="loader" id="loader2"></div>
+			<canvas id="myChart1" width="500" height="200"></canvas>
+			<div id="infoStation2"></div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="function.js"></script>
+	<script>
+		const ctx = document.getElementById('myChart');
+		const ctx2 = document.getElementById('myChart1');
+		const loader1 = document.getElementById('loader1');
+		const loader2 = document.getElementById('loader2');
+		const infoStation1 = document.getElementById('infoStation1');
+		const infoStation2 = document.getElementById('infoStation2');
+
+		liveinfoStation(0, ctx);
+		liveinfoStation(1, ctx2);
+	</script>
+</body>
+
+</html>

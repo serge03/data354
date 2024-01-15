@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link rel="stylesheet" href="style.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+	div {
+		padding: 8px 0;
+	}
+	
+	.selectionDate {
+		display: flex;
+	}
+	
+	.selectionDate div {
+		margin-right: 20px;
+	}
+	
+	#run {
+		padding: 4px 16px;
+		background-color: rgb(74, 60, 222);
+		margin: 8px;
+		color: white;
+		border-radius: 5px;
+		border: 1px solid rgb(74, 60, 222);
+	}
+	</style>
+</head>
+
+<body>
+	<nav>
+		<h1>Visualiseur de donné</h1> <a href="index.html"><span>Live <i></i></span></a> <a href="periode.html" class="active"><span>Periode</span></a> </nav>
+	<div>
+		<select id="station">
+			<option>SMART188</option>
+			<option>SMART189</option>
+		</select>
+		<div id="selectPeriode">
+			<label for="">Date unique</label>
+			<input type="radio" value="1" name="typeDate" checked>
+			<label for="">Periode</label>
+			<input type="radio" value="2" name="typeDate"> </div>
+		<div class="selectionDate">
+			<div> <span>Date</span>
+				<input type="date" name="date" id="date"> </div>
+			<div id="inputPickerfin" style="display: none;"> <span>Date Fin</span>
+				<input type="date" name="date" id="datefin"> </div>
+		</div>
+		<button type="button" id="run">valider</button>
+		<div>
+			<div class="loader"></div>
+			<div id="infoStation"></div>
+			<div id="graph" style="width:600px;height:250px;"></div>
+		</div>
+	</div>
+	<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+	<script src="function.js"></script>
+	<script>
+
+		fetchInfo(urlBase+toApi(ap4,["AQ54"]))
+
+
+
+        let uniquePeriode = true;
+        let loading = false;
+        const btn = document.querySelector('#run');
+        const datepiker = document.querySelector('#date');
+        const datepikerend = document.querySelector('#datefin');
+        const station = document.querySelector('#station');
+        const selectionPeriode = document.querySelector('#selectPeriode');
+        const inputPicker = document.querySelector('#inputPickerfin');
+        const loader = document.querySelector('.loader');
+        loader.style.display = "none";
+        const graph = document.getElementById('graph');
+		const infoStation = document.getElementById('infoStation');
+
+
+		
+        selectionPeriode.addEventListener("click", (e) => {
+            let check = selectionPeriode.querySelector('input').checked;
+            uniquePeriode = check;
+            if(check) {
+                inputPicker.style.display = "none";
+            } else {
+                inputPicker.style.display = "block";
+            }
+        });
+        btn.addEventListener("click", (e) => {
+            if(loading) {
+                return
+            }
+            if(datepiker.value == "") {
+                alert("choisir une date");
+                return;
+            }
+            if(!uniquePeriode && datepikerend.value == "") {
+                alert("choisir une date de fin");
+                return;
+            }
+			addInfo(infoStation,station.value);
+            drawGraph(station.value, datepiker.value, datepikerend.value);
+        })
+	</script>
+</body>
+
+</html>
